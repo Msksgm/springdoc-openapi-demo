@@ -5,6 +5,8 @@ plugins {
 	id("io.spring.dependency-management") version "1.1.4"
 	kotlin("jvm") version "1.9.21"
 	kotlin("plugin.spring") version "1.9.21"
+
+	id("org.springdoc.openapi-gradle-plugin") version "1.8.0"
 }
 
 group = "com.example"
@@ -23,6 +25,8 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 }
 
 tasks.withType<KotlinCompile> {
@@ -34,4 +38,10 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+openApi {
+	outputFileName.set("openapi.yaml")
+	outputDir.set(file("./docs"))
+	apiDocsUrl.set("http://localhost:8080/v3/api-docs.yaml")
 }
